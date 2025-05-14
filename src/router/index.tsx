@@ -1,16 +1,25 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import NotFound from "../components/NotFound";
+import { createBrowserRouter, Navigate } from "react-router-dom"
+import Welcome from "@/views/common/Welcome"
+import ErrPage404 from "@/views/common/404"
+import ErrPage403 from "@/views/common/403"
 
-const BaseRouter = createBrowserRouter([
+const router = [
   {
     path: "/",
-    element: <App />,
+    element: <Welcome />
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: <Navigate to='/404' />
   },
-]);
+  {
+    path: "/404",
+    element: <ErrPage404 />
+  },
+  {
+    path: "/403",
+    element: <ErrPage403 />
+  }
+]
 
-export default BaseRouter;
+export default createBrowserRouter(router)
