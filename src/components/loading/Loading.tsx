@@ -1,16 +1,19 @@
 import ReactDom from "react-dom/client"
 import Loading from "@/components/loading/Spin"
-import "./loading.less"
 
 let count: number = 0
 let loadingContainer: HTMLDivElement | null = null
 
-export const showLoading = () => {
+export const showLoading = (tip: string = "") => {
   if (count === 0) {
-    const loadingContainer = document.createElement("div")
+    loadingContainer = document.createElement("div")
     loadingContainer.setAttribute("id", "loading")
     document.body.appendChild(loadingContainer)
-    ReactDom.createRoot(loadingContainer).render(<Loading />)
+    if (tip) {
+      ReactDom.createRoot(loadingContainer).render(<Loading tip={tip} />)
+    } else {
+      ReactDom.createRoot(loadingContainer).render(<Loading />)
+    }
   }
   count++
 }
