@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom"
 import Welcome from "@/views/common/Welcome"
+import Login from "@/views/login/Login"
 import ErrPage404 from "@/views/common/404"
 import ErrPage403 from "@/views/common/403"
 
@@ -7,6 +8,10 @@ const router = [
   {
     path: "/",
     element: <Welcome />
+  },
+  {
+    path: "/login",
+    element: <Login />
   },
   {
     path: "*",
