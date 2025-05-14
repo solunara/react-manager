@@ -16,5 +16,5 @@ module.exports = {
   // 在对象中的括号之间添加空格, {a:5} 格式化为 { a: 5 }
   brackerSpacing: true,
   // 禁止尾随逗号
-  trailingComma: "none",
-};
+  trailingComma: "none"
+}
