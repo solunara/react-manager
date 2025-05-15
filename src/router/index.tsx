@@ -7,6 +7,11 @@ import ErrPage403 from "@/views/common/403"
 const router = [
   {
     path: "/",
+    redirect: "/welcome"
+    //element: <Welcome />
+  },
+  {
+    path: "/welcome",
     element: <Welcome />
   },
   {

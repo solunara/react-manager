@@ -2,8 +2,8 @@ import axios from "axios"
 import { showLoading, hidenLoading } from "@/components/loading/Loading"
 import env from "@/config/env"
 import type { ResponseData } from "@/types"
-import { message } from "antd"
-import { REMOVE_TOKEN } from "@/utils/storage"
+import { message } from "@/components/AntdGlobal"
+import { GET_TOKEN, REMOVE_TOKEN } from "@/utils/storage"
 
 // axios 全局配置
 const request = axios.create({
@@ -34,6 +34,13 @@ request.interceptors.request.use(config => {
       }
     }
   }
+  // 设置token
+  let tokenStr = GET_TOKEN()
+  if (tokenStr == null || tokenStr == "") {
+    REMOVE_TOKEN()
+  } else {
+    config.headers.set("Authorization", tokenStr)
+  }
   return config
 })
 
@@ -49,6 +56,10 @@ request.interceptors.response.use(
     }
     if (data.code == 400) {
       message.error("请求数据错误")
+      return Promise.reject(data)
+    }
+    if (data.code == 404) {
+      message.error("请求资源不存在")
       return Promise.reject(data)
     }
     if (data.code != 200) {

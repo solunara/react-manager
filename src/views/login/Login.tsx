@@ -1,14 +1,17 @@
 import styles from "./login.module.less"
-import { Button, Form, Input, message } from "antd"
+import { Button, Form, Input, App } from "antd"
 import api from "@/api"
 import type { Login } from "@/types"
 import { SET_TOKEN } from "@/utils/storage"
 
 export default function LoginFn() {
+  const antdApp = App.useApp()
   const onFinish = async (value: Login.params) => {
     const data = await api.login(value)
     SET_TOKEN(data.token)
-    message.success("登陆成功")
+    antdApp.message.success("登陆成功")
+    const callbackUrl = new URLSearchParams(location.search)
+    location.href = callbackUrl.get("callback") || "/welcome"
   }
 
   return (
