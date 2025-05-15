@@ -15,8 +15,9 @@ const request = axios.create({
 
 // axios 全局请求拦截器
 request.interceptors.request.use(config => {
-  // 开启loading效果
-  showLoading()
+  // loading效果
+  if (config.showLoging) showLoading()
+
   // 加载运行时环境变量
   if (env.mock) {
     config.baseURL = env.mockApi
@@ -75,11 +76,16 @@ request.interceptors.response.use(
   }
 )
 
+interface IConfig {
+  showLoging?: boolean
+  showError?: boolean
+}
+
 export default {
   get<T>(url: string, params?: object): Promise<T> {
     return request.get(url, { params })
   },
-  post<T>(url: string, params?: object): Promise<T> {
-    return request.post(url, params)
+  post<T>(url: string, params?: object, options: IConfig = { showLoging: true, showError: true }): Promise<T> {
+    return request.post(url, params, options)
   }
 }

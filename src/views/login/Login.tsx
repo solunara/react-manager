@@ -3,11 +3,15 @@ import { Button, Form, Input, App } from "antd"
 import api from "@/api"
 import type { Login } from "@/types"
 import { SET_TOKEN } from "@/utils/storage"
+import { useState } from "react"
 
 export default function LoginFn() {
   const antdApp = App.useApp()
+  const [loading, setLoading] = useState(false)
   const onFinish = async (value: Login.params) => {
+    setLoading(true)
     const data = await api.login(value)
+    setLoading(false)
     SET_TOKEN(data.token)
     antdApp.message.success("登陆成功")
     const callbackUrl = new URLSearchParams(location.search)
@@ -28,7 +32,7 @@ export default function LoginFn() {
           </Form.Item>
 
           <Form.Item>
-            <Button type='primary' htmlType='submit' block>
+            <Button type='primary' htmlType='submit' block loading={loading}>
               登陆
             </Button>
           </Form.Item>

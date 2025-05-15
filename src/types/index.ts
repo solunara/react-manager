@@ -5,6 +5,14 @@ export interface ResponseData<T = any> {
   data: T
 }
 
+//
+declare module "axios" {
+  interface AxiosRequestConfig {
+    showLoging?: boolean
+    showError?: boolean
+  }
+}
+
 // 登陆请求参数和返回数据类型
 export namespace Login {
   export interface params {
