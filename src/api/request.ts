@@ -1,6 +1,9 @@
 import axios from "axios"
 import { showLoading, hidenLoading } from "@/components/loading/Loading"
-import env from "@/config"
+import env from "@/config/env"
+import type { ResponseData } from "@/types"
+import { message } from "antd"
+import { REMOVE_TOKEN } from "@/utils/storage"
 
 // axios 全局配置
 const request = axios.create({
@@ -38,11 +41,34 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(
   response => {
     hidenLoading()
-    return response.data
+    const data: ResponseData = response.data
+    if (data.code === 401 || data.code === 403) {
+      message.warning("请重新登陆")
+      REMOVE_TOKEN()
+      return Promise.reject(data)
+    }
+    if (data.code == 400) {
+      message.error("请求数据错误")
+      return Promise.reject(data)
+    }
+    if (data.code != 200) {
+      message.error(data.msg)
+      return Promise.reject(data)
+    }
+    return data.data
   },
   error => {
+    hidenLoading()
+    message.error(error.message)
     return Promise.reject(error)
   }
 )
 
-export default request
+export default {
+  get<T>(url: string, params?: object): Promise<T> {
+    return request.get(url, { params })
+  },
+  post<T>(url: string, params?: object): Promise<T> {
+    return request.post(url, params)
+  }
+}
