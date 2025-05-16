@@ -2,6 +2,7 @@ import React from "react"
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
 import { Layout, Menu, theme, Watermark } from "antd"
 import NavHeader from "@/components/navHeader"
+import NavFooter from "@/components/navFooter"
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -45,7 +46,7 @@ const App: React.FC = () => {
               content
             </div>
           </Content>
-          <Footer style={{ textAlign: "center" }}>Ant Design ©{new Date().getFullYear()} Created by Ant UED</Footer>
+          <NavFooter />
         </Layout>
       </Layout>
     </Watermark>
