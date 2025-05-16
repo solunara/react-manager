@@ -5,7 +5,7 @@ export interface ResponseData<T = any> {
   data: T
 }
 
-//
+// 扩展AxiosRequestConfig类型
 declare module "axios" {
   interface AxiosRequestConfig {
     showLoging?: boolean
