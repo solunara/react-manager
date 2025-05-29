@@ -8,7 +8,7 @@ import Layout from "@/views/layout"
 const router = [
   {
     path: "/",
-    element: <Navigate to='/home' />
+    element: <Navigate to='/welcome' />
   },
   {
     path: "/login",
@@ -18,7 +18,7 @@ const router = [
     element: <Layout />,
     children: [
       {
-        path: "/home",
+        path: "/welcome",
         element: <Welcome />
       }
     ]

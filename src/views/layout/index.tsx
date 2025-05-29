@@ -1,6 +1,8 @@
 import React from "react"
+import { Outlet } from "react-router-dom"
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from "@ant-design/icons"
 import { Layout, Menu, theme, Watermark } from "antd"
+import NavMenu from "@/components/navMenu"
 import NavHeader from "@/components/navHeader"
 import NavFooter from "@/components/navFooter"
 
@@ -13,10 +15,6 @@ const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].
 }))
 
 const App: React.FC = () => {
-  const {
-    token: { colorBgContainer, borderRadiusLG }
-  } = theme.useToken()
-
   return (
     <Watermark content='watermark'>
       <Layout>
@@ -30,21 +28,12 @@ const App: React.FC = () => {
             console.log(collapsed, type)
           }}
         >
-          侧边栏
+          <NavMenu />
         </Sider>
         <Layout>
           <NavHeader />
           <Content style={{ margin: "24px 16px 0" }}>
-            <div
-              style={{
-                padding: 24,
-                minHeight: 360,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG
-              }}
-            >
-              content
-            </div>
+            <Outlet />
           </Content>
           <NavFooter />
         </Layout>
