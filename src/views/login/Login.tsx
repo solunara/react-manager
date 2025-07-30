@@ -9,13 +9,17 @@ export default function LoginFn() {
   const antdApp = App.useApp()
   const [loading, setLoading] = useState(false)
   const onFinish = async (value: Login.params) => {
-    setLoading(true)
-    const data = await api.login(value)
-    setLoading(false)
-    SET_TOKEN(data.token)
-    antdApp.message.success("登陆成功")
-    const callbackUrl = new URLSearchParams(location.search)
-    location.href = callbackUrl.get("callback") || "/welcome"
+    try {
+      setLoading(true)
+      const data = await api.login(value)
+      setLoading(false)
+      SET_TOKEN(data.token)
+      antdApp.message.success("登陆成功")
+      const callbackUrl = new URLSearchParams(location.search)
+      location.href = callbackUrl.get("callback") || "/welcome"
+    } catch (error) {
+      setLoading(false)
+    }
   }
 
   return (
